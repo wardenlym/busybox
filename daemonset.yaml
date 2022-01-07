@@ -1,33 +1,45 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: busybox
+  name: busybox-nettool
   labels:
     tier: node
-    app: busybox
+    app: busybox-nettool
 spec:
   selector:
     matchLabels:
       tier: node
-      app: busybox
+      app: busybox-nettool
   template:
     metadata:
       labels:
         tier: node
-        app: busybox
+        app: busybox-nettool
     spec:
       hostNetwork: true
       tolerations:
       - operator: Exists
         effect: NoSchedule
       containers:
-      - name: busybox
+      - name: busybox-nettool
         image: wardenlym/busybox
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        - name: HTTPS_PORT
+          value: "11443"
         ports:
-        - containerPort: 80
+        - containerPort: 1180
           name: http-port
-        - containerPort: 443
+        - containerPort: 11443
           name: https-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
         securityContext:
           runAsUser: 0
           capabilities:
