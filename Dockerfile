@@ -2,7 +2,7 @@ FROM alpine:3.15
 
 LABEL MAINTAINER wardenlym (wardenlym@gmail.com)
 
-EXPOSE 80 443
+EXPOSE 80 443 1180 11443
 
 RUN     apk update \
     &&  apk add bash bind-tools busybox-extras curl \
