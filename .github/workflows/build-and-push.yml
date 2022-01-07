@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # master handles: "latest"; and tags "minimal" and "alpine-minimal"
-      - master
+      - main
     tags:
       - minimal
       - alpine-minimal
