@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: busybox
+  labels:
+    tier: node
+    app: busybox
+spec:
+  selector:
+    matchLabels:
+      tier: node
+      app: busybox
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: busybox
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: busybox
+        image: wardenlym/busybox
+        ports:
+        - containerPort: 80
+          name: http-port
+        - containerPort: 443
+          name: https-port
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
